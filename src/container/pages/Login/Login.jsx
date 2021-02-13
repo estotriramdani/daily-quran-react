@@ -1,52 +1,75 @@
 import React, { Component, Fragment } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Beranda from "../Beranda/Beranda";
 
 class Login extends Component {
   state = {
-    name: "",
-    location: "",
-    profession: "",
+    identity: {
+      name: "",
+      profession: "",
+      location: "",
+    },
   };
 
-  handleSubmit = () => {};
+  handleSubmit = () => {
+    let name = this.state.identity.name;
+    let profession = this.state.identity.profession;
+    let location = this.state.identity.location;
+    localStorage.setItem("name", name);
+    localStorage.setItem("profession", profession);
+    localStorage.setItem("location", location);
+    this.props.history.push(`/`);
+  };
 
-  handleFormChange = () => {};
+  handleFormChange = (event) => {
+    let newIdentity = { ...this.state.identity };
+    newIdentity[event.target.name] = event.target.value;
+    this.setState({
+      identity: newIdentity,
+    });
+  };
 
   render() {
     return (
       <Fragment>
-        <div
-          className="login-wrapper"
-          style={{ paddingBottom: "0px!important" }}
-        >
+        <div className="login-wrapper">
           <div>
             <div className="login-box">
               <h1>Selamat Datang</h1>
               <p>Yuk, isi identitasmu dahulu!</p>
-              <input type="text" placeholder="Nama" className="form-control" />
+              <input
+                type="text"
+                placeholder="Nama"
+                name="name"
+                className="form-control"
+                onChange={this.handleFormChange}
+              />
               <input
                 type="text"
                 placeholder="Pekerjaan"
                 className="form-control"
+                name="profession"
+                onChange={this.handleFormChange}
               />
-              <select name id className="form-control">
-                <option value>Pilih Kota Terdekat</option>
-                <option value>Bandung</option>
-                <option value>Jakarta</option>
-                <option value>Surabaya</option>
+              <select
+                className="form-control"
+                onChange={this.handleFormChange}
+                name="location"
+              >
+                <option>Pilih Kota Terdekat</option>
+                <option value="Bandung" name="location">
+                  Bandung
+                </option>
+                <option value="Jakarta">Jakarta</option>
+                <option value="Surabaya">Surabaya</option>
               </select>
-              <a href="/beranda">
-                <button className="form-control" onClick={this.handleSubmit}>
-                  Masuk
-                </button>
-              </a>
+
+              <button className="form-control" onClick={this.handleSubmit}>
+                Masuk
+              </button>
             </div>
             <div className="footer-login">
               <h1>Daily Prayer</h1>
               <p>
-                oleh{" "}
-                <a href="https://estotriramdani.github">Esto Triramdani N</a>
+                oleh <span>Esto Triramdani N</span>
               </p>
             </div>
           </div>

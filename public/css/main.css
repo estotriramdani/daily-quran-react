@@ -28,7 +28,6 @@
 
 .container {
   background-color: #f4f4f4;
-  /* padding-bottom: 80px; */
 }
 
 input {
@@ -163,14 +162,15 @@ select option {
   width: 90px;
 }
 
-.navigation .item a {
+.navigation .item span {
+  cursor: pointer;
   color: #ffffff;
   text-decoration: none;
   display: block;
   font-size: 25px;
 }
 
-.navigation .item a p {
+.navigation .item span p {
   margin-top: 8px;
   cursor: pointer;
   font-size: 14px !important;
@@ -226,6 +226,7 @@ select option {
 }
 
 .login-wrapper {
+  padding-bottom: 80px;
   min-height: 100vh;
   background-color: #00afb9;
   font-family: "Mukta", sans-serif;
@@ -261,7 +262,7 @@ select option {
   margin-top: 10px;
 }
 
-.login-wrapper .footer-login p a {
+.login-wrapper .footer-login p span {
   color: #ffffff;
 }
 
@@ -286,7 +287,7 @@ select option {
   border: 1px solid #00afb9;
 }
 
-.login-box a {
+.login-box span {
   text-decoration: none;
 }
 
@@ -380,8 +381,10 @@ select option {
   font-size: 13px;
 }
 
-.home-wrapper .header .is-you a {
+.home-wrapper .header .is-you span {
   color: #00afb9;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .home-wrapper .content-wrapper {
@@ -461,7 +464,7 @@ select option {
   border: 1px solid #ffffff;
 }
 
-.card:hover .btn-reference a {
+.card:hover .btn-reference span {
   color: #ffffff;
 }
 
@@ -493,17 +496,23 @@ select option {
   box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.1);
 }
 
-.reference-widget .btn-reference a {
+.reference-widget .btn-reference span {
   display: block;
   text-decoration: none;
   color: #00afb9;
   line-height: 40px;
   -webkit-transition: 0.1s;
   transition: 0.1s;
+  cursor: pointer;
 }
 
-.reference-widget .btn-reference a:hover {
+.reference-widget .btn-reference span:hover {
   font-weight: 500;
+}
+
+.hadis-wrapper {
+  padding-bottom: 80px;
+  min-height: 100vh;
 }
 
 .hadis-wrapper .search-box {
@@ -626,6 +635,11 @@ select option {
   }
 }
 
+.quran-wrapper {
+  padding-bottom: 80px;
+  min-height: 100vh;
+}
+
 .quran-wrapper .search-box {
   padding-top: 10px;
   display: -webkit-box;
@@ -679,11 +693,12 @@ select option {
   font-family: "Mukta", sans-serif;
 }
 
-.quran-wrapper .item-wrapper a {
+.quran-wrapper .item-wrapper span {
+  cursor: pointer;
   text-decoration: none;
 }
 
-.quran-wrapper .item-wrapper a .item {
+.quran-wrapper .item-wrapper span .item {
   margin-bottom: 10px;
   border-radius: 8px;
   padding: 10px;
@@ -704,12 +719,12 @@ select option {
   font-size: 14px;
 }
 
-.quran-wrapper .item-wrapper a .item:hover {
+.quran-wrapper .item-wrapper span .item:hover {
   background-color: #00afb9;
   color: #ffffff;
 }
 
-.quran-wrapper .item-wrapper a .item p {
+.quran-wrapper .item-wrapper span .item p {
   cursor: pointer;
 }
 
@@ -722,6 +737,7 @@ select option {
 .detail-quran-wrapper {
   position: relative;
   min-height: 100vh;
+  padding-bottom: 80px;
 }
 
 .detail-quran-wrapper .header-detail {
@@ -744,12 +760,12 @@ select option {
   box-shadow: 0 5px 16px rgba(0, 0, 0, 0.07);
 }
 
-.detail-quran-wrapper .header-detail a {
+.detail-quran-wrapper .header-detail span {
   text-decoration: none;
   color: #ffffff;
 }
 
-.detail-quran-wrapper .header-detail a:hover {
+.detail-quran-wrapper .header-detail span:hover {
   color: #f8f8f8;
 }
 
