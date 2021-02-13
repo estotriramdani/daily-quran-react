@@ -4,6 +4,7 @@ import QuranCard from "../../../component/QuranCard/QuranCard";
 class Alquran extends Component {
   state = {
     surah: [],
+    keyword: "",
   };
 
   goToHadith = () => {
@@ -17,6 +18,13 @@ class Alquran extends Component {
   };
 
   componentDidMount() {
+    if (
+      !localStorage.getItem("name") ||
+      !localStorage.getItem("profession") ||
+      !localStorage.getItem("location")
+    ) {
+      window.location = "/login";
+    }
     this.getSurah();
   }
 
@@ -28,11 +36,35 @@ class Alquran extends Component {
           surah: res,
         });
       });
-    console.log(this.state.surah);
   };
 
-  handleDetail = (id) => {
+  handleDetail = (id, surat_name, jumlah_ayat, terjemah) => {
     this.props.history.push(`/alquran/${id}`);
+    localStorage.setItem("surat_name", surat_name);
+    localStorage.setItem("jumlah_ayat", jumlah_ayat);
+    localStorage.setItem("surat_terjemah", terjemah);
+  };
+
+  handleChangeKeyword = (event) => {
+    let newKeyword = event.target.value;
+    this.setState({
+      keyword: newKeyword,
+    });
+    console.log(this.state.keyword);
+    this.handleSearch(newKeyword);
+  };
+
+  handleSearch = (keyword) => {
+    fetch(
+      "http://localhost/dyer-app-api/api/quran/find-surah.php?keyword=" +
+        keyword
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          surah: res,
+        });
+      });
   };
 
   render() {
@@ -40,12 +72,15 @@ class Alquran extends Component {
       <Fragment>
         <div className="quran-wrapper">
           <div className="search-box">
-            <form>
-              <input type="text" placeholder="Masukkan Nomor/Nama Surat" />
-              <button className="search-button">
-                <i className="bi bi-search" />
-              </button>
-            </form>
+            <input
+              type="text"
+              placeholder="Masukkan Nomor/Nama Surat"
+              onChange={this.handleChangeKeyword}
+              name="keyword"
+            />
+            <button className="search-button">
+              <i className="bi bi-search" />
+            </button>
           </div>
           <div className="item-wrapper">
             {this.state.surah.map((surah) => {
@@ -54,6 +89,7 @@ class Alquran extends Component {
                   key={surah.id}
                   data={surah}
                   goDetail={this.handleDetail}
+                  saveSurahInfo={this.saveSurahInfo}
                 />
               );
             })}

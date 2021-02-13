@@ -9,6 +9,16 @@ class Login extends Component {
     },
   };
 
+  componentDidMount() {
+    if (
+      localStorage.getItem("name") ||
+      localStorage.getItem("profession") ||
+      localStorage.getItem("location")
+    ) {
+      window.location = "/";
+    }
+  }
+
   handleSubmit = () => {
     let name = this.state.identity.name;
     let profession = this.state.identity.profession;

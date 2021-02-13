@@ -3,10 +3,20 @@ import AyatCard from "../AyatCard/AyatCard";
 
 export default class DetailSurah extends Component {
   state = {
+    surahId: this.props.match.params.surahId,
     surah: [],
+    surat_name: "",
+    keyword: "",
   };
 
   componentDidMount() {
+    if (
+      !localStorage.getItem("name") ||
+      !localStorage.getItem("profession") ||
+      !localStorage.getItem("location")
+    ) {
+      window.location = "/login";
+    }
     const surahId = this.props.match.params.surahId;
     fetch("http://localhost/dyer-app-api/api/quran/?surah=" + surahId)
       .then((res) => res.json())
@@ -16,6 +26,26 @@ export default class DetailSurah extends Component {
         });
       });
   }
+
+  handleChangeKeyword = (event) => {
+    let newKeyword = event.target.value;
+    this.setState({
+      keyword: newKeyword,
+    });
+    this.handleSearchVerse(newKeyword);
+  };
+
+  handleSearchVerse = (keyword) => {
+    fetch(
+      `http://localhost/dyer-app-api/api/quran/ayat.php?surah=${this.state.surahId}&ayat=${keyword}`
+    )
+      .then((res) => res.json())
+      .then((res) => {
+        this.setState({
+          surah: res,
+        });
+      });
+  };
 
   goToQuran = () => {
     this.props.history.push("/alquran");
@@ -35,8 +65,11 @@ export default class DetailSurah extends Component {
               </span>
             </div>
             <div className="surah">
-              <p className="title">Al Fatihah</p>
-              <p className="translation">Pembukaan - 7 Ayat</p>
+              <p className="title">{localStorage.getItem("surat_name")}</p>
+              <p className="translation">
+                {localStorage.getItem("surat_terjemah")} -{" "}
+                {localStorage.getItem("jumlah_ayat")} Ayat
+              </p>
             </div>
             <div className="btn-back" onClick={this.goHome}>
               <span>
@@ -48,21 +81,16 @@ export default class DetailSurah extends Component {
             {this.state.surah.map((surah) => {
               return <AyatCard key={surah.id} data={surah} />;
             })}
-            {/* <div className="item">
-              <div className="verse">Ayat 1</div>
-              <div className="arabic">
-                بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
-              </div>
-              <div className="latin">bismillāhir-raḥmānir-raḥīm</div>
-              <div className="translation">
-                Segala puji bagi Allah, Tuhan seluruh alam,
-              </div>
-            </div> */}
           </div>
           <div className="jump-verse">
-            <input type="number" placeholder="Masukkan ayat" />
+            <input
+              type="number"
+              placeholder="Masukkan ayat"
+              name="keyword"
+              onChange={this.handleChangeKeyword}
+            />
             <button>
-              <i className="bi bi-search" />
+              <i className="bi bi-search" onClick={this.handleSearchVerse} />
             </button>
           </div>
         </div>

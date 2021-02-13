@@ -22,7 +22,11 @@ export default class Beranda extends Component {
   };
 
   componentDidMount() {
-    if (!localStorage.getItem("name")) {
+    if (
+      !localStorage.getItem("name") &&
+      !localStorage.getItem("profession") &&
+      !localStorage.getItem("location")
+    ) {
       window.location = "/login";
     }
 
