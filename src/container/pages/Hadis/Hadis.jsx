@@ -32,7 +32,7 @@ class Hadis extends Component {
 
   handleSearch = () => {
     fetch(
-      `http://penerbit-ejbooks.my.id/dyer/api/hadis/cari.php?keyword=${this.state.keyword}&limit=${this.state.limit}`
+      `http://localhost/dyer-app-api/api/hadis/cari.php?keyword=${this.state.keyword}&limit=${this.state.limit}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -54,7 +54,7 @@ class Hadis extends Component {
   handleChangeLimit = (event) => {
     let newLimit = event.target.value;
     fetch(
-      `http://penerbit-ejbooks.my.id/dyer/api/hadis/cari.php?keyword=${this.state.keyword}&limit=${newLimit}`
+      `http://localhost/dyer-app-api/api/hadis/cari.php?keyword=${this.state.keyword}&limit=${newLimit}`
     )
       .then((res) => res.json())
       .then((res) => {

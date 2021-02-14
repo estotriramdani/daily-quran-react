@@ -6,7 +6,8 @@ class Alquran extends Component {
   state = {
     surah: [],
     keyword: "",
-    url: "http://penerbit-ejbooks.my.id/dyer",
+    url: "http://localhost/dyer-app-api",
+    errorMessage: "",
   };
 
   goToHadith = () => {
@@ -62,6 +63,12 @@ class Alquran extends Component {
       .then((res) => {
         this.setState({
           surah: res,
+          errorMessage: "",
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          errorMessage: `Pastikan ejaan sudah sesuai`,
         });
       });
   };
@@ -84,6 +91,9 @@ class Alquran extends Component {
             </button>
           </div>
           <div className="item-wrapper">
+            <div style={{ marginBottom: "10px", color: "orange" }}>
+              {this.state.errorMessage}
+            </div>
             {this.state.surah.map((surah) => {
               return (
                 <QuranCard

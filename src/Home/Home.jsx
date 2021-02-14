@@ -15,7 +15,7 @@ export default class Home extends Component {
           <Route path="/login" component={Login} />
           <Route path="/hadis" component={Hadis} />
           <Route path="/alquran" exact component={Alquran} />
-          <Route path="/alquran/:surahId" exact component={DetailSurah} />
+          <Route path="/alquran/:surahId" component={DetailSurah} />
         </Fragment>
       </Router>
     );

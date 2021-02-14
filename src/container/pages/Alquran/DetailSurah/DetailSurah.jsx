@@ -8,6 +8,7 @@ export default class DetailSurah extends Component {
     surah: [],
     keyword: "",
     url: "http://penerbit-ejbooks.my.id/dyer",
+    errorMessage: "",
   };
 
   componentDidMount() {
@@ -22,7 +23,8 @@ export default class DetailSurah extends Component {
     if (surahId > 114) {
       window.location = "/alquran";
     }
-    fetch("http://penerbit-ejbooks.my.id/dyer/api/quran/?surah=" + surahId)
+    console.log(surahId);
+    fetch("http://localhost/dyer-app-api/api/quran/index.php?surah=" + surahId)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -47,6 +49,14 @@ export default class DetailSurah extends Component {
       .then((res) => {
         this.setState({
           surah: res,
+          errorMessage: "",
+        });
+      })
+      .catch((err) => {
+        this.setState({
+          errorMessage: `Masukkan Ayat yang valid. Minimal 0 dan maksimal ${localStorage.getItem(
+            "jumlah_ayat"
+          )}.`,
         });
       });
   };
@@ -82,6 +92,9 @@ export default class DetailSurah extends Component {
             </div>
           </div>
           <div className="item-wrapper">
+            <div style={{ marginBottom: "10px", color: "orange" }}>
+              {this.state.errorMessage}
+            </div>
             {this.state.surah.map((surah) => {
               return <AyatCard key={surah.id} data={surah} />;
             })}

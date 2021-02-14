@@ -874,6 +874,7 @@ select option {
 .detail-quran-wrapper {
   position: relative;
   min-height: 100vh;
+  padding-bottom: 80px;
 }
 
 .detail-quran-wrapper .header-detail {
