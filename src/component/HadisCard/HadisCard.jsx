@@ -2,7 +2,7 @@ import React from "react";
 
 export const HadisCard = (props) => {
   return (
-    <div className="item">
+    <div className="item" style={{ marginBottom: "20px" }}>
       <h2 className="title">
         Sahih Bukhari ◦ No. Hadis {props.data.no} ◦ Kitab {props.data.kitab}
       </h2>

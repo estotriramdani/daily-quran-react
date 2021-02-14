@@ -2,12 +2,16 @@ import React, { Component, Fragment } from "react";
 import HadisCard from "../../../component/HadisCard/HadisCard";
 import "./Hadis.css";
 import "../../../assets/main.css";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class Hadis extends Component {
   state = {
     hadis: [],
     keyword: "...",
     limit: 5,
+    base_url: "localhost",
+    message: `Aplikasi ini masih ada pengembangan. Jika Arabic text masih berupa '???', mohon diabaikan.
+    Terima kasih atas perhatiannya`,
   };
 
   goToHadith = () => {
@@ -32,7 +36,7 @@ class Hadis extends Component {
 
   handleSearch = () => {
     fetch(
-      `http://localhost/dyer-app-api/api/hadis/cari.php?keyword=${this.state.keyword}&limit=${this.state.limit}`
+      `http://${this.state.base_url}/dyer-app-api/api/hadis/cari.php?keyword=${this.state.keyword}&limit=${this.state.limit}`
     )
       .then((res) => res.json())
       .then((res) => {
@@ -48,21 +52,27 @@ class Hadis extends Component {
     this.setState({
       keyword: newKeyword,
     });
-    this.handleSearch();
+
+    if (newKeyword) {
+      this.handleSearch();
+    }
   };
 
   handleChangeLimit = (event) => {
     let newLimit = event.target.value;
-    fetch(
-      `http://localhost/dyer-app-api/api/hadis/cari.php?keyword=${this.state.keyword}&limit=${newLimit}`
-    )
-      .then((res) => res.json())
-      .then((res) => {
-        this.setState({
-          hadis: res,
-          limit: newLimit,
-        });
-      });
+    if (newLimit > 0) {
+      fetch(
+        `http://${this.state.base_url}/dyer-app-api/api/hadis/cari.php?keyword=${this.state.keyword}&limit=${newLimit}`
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          this.setState({
+            hadis: res,
+            limit: newLimit,
+          });
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   render() {
@@ -78,29 +88,42 @@ class Hadis extends Component {
               autoComplete="of"
               autoFocus
             />
-            <button className="search-button" onClick={this.handleSearch}>
+            {/* <button className="search-button" >
               <i className="bi bi-search" />
-            </button>
+            </button> */}
           </div>
           <div className="limit">
             <input
               type="number"
-              placeholder="Batasi hasil pencarian (maks. 8007)"
+              placeholder="Batasi hasil pencarian (maks. 7008)"
               name="limit"
               onChange={this.handleChangeLimit}
             />
           </div>
+          <div style={{ padding: "0px 15px" }}>{this.state.message}</div>
           <div className="content-hadith">
             {this.state.hadis.length > 0 ? (
-              <h1>Hasil Pencarian ({`${this.state.limit} hasil`})</h1>
+              <h1>Hasil Pencarian ({`${this.state.hadis.length} hasil`})</h1>
             ) : (
               <h1>Silakan masukan kata kunci</h1>
             )}
 
             <div className="item-wrapper">
-              {this.state.hadis.map((hadis) => {
-                return <HadisCard key={hadis.no} data={hadis} />;
-              })}
+              <InfiniteScroll
+                dataLength={this.state.hadis.length} //This is important field to render the next data
+                hasMore={true}
+                loadMore={0}
+                loader={<h4>Loading...</h4>}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>Yay! You have seen it all</b>
+                  </p>
+                }
+              >
+                {this.state.hadis.map((hadis) => {
+                  return <HadisCard key={hadis.no} data={hadis} />;
+                })}
+              </InfiniteScroll>
             </div>
           </div>
         </div>

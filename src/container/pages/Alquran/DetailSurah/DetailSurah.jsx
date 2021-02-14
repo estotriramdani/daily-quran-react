@@ -7,8 +7,10 @@ export default class DetailSurah extends Component {
     surahId: this.props.match.params.surahId,
     surah: [],
     keyword: "",
-    url: "http://penerbit-ejbooks.my.id/dyer",
+    base_url:
+      "https://raw.githubusercontent.com/iqbalsyamhad/Al-Quran-JSON-Indonesia-Kemenag/master",
     errorMessage: "",
+    search_result: [],
   };
 
   componentDidMount() {
@@ -24,17 +26,20 @@ export default class DetailSurah extends Component {
       window.location = "/alquran";
     }
     console.log(surahId);
-    fetch("http://localhost/dyer-app-api/api/quran/index.php?surah=" + surahId)
+    // fetch("http://localhost/dyer-app-api/api/quran/index.php?surah=" + surahId)
+    fetch(this.state.base_url + "/Surat/" + surahId + ".json")
       .then((res) => res.json())
       .then((res) => {
         this.setState({
-          surah: res,
+          surah: res.data,
         });
+        console.log(res);
       });
+    localStorage.setItem("fontSize", "30");
   }
 
   handleChangeKeyword = (event) => {
-    let newKeyword = event.target.value;
+    let newKeyword = event.target.value - 1;
     this.setState({
       keyword: newKeyword,
     });
@@ -42,17 +47,28 @@ export default class DetailSurah extends Component {
   };
 
   handleSearchVerse = (keyword) => {
-    fetch(
-      `http://localhost/dyer-app-api/api/quran/ayat.php?surah=${this.state.surahId}&ayat=${keyword}`
-    )
+    // fetch(
+    //   `http://penerbit-ejbooks.my.id/dyer-app-api/api/quran/ayat.php?surah=${this.state.surahId}&ayat=${keyword}`
+    // )
+    fetch(`${this.state.base_url}/Surat/${this.state.surahId}.json`)
       .then((res) => res.json())
       .then((res) => {
-        this.setState({
-          surah: res,
-          errorMessage: "",
-        });
+        if (keyword <= localStorage.getItem("jumlah_ayat")) {
+          this.setState({
+            search_result: res.data[keyword],
+            errorMessage: "",
+          });
+        } else {
+          this.setState({
+            errorMessage: `Masukkan Ayat yang valid. Minimal 1 dan maksimal ${localStorage.getItem(
+              "jumlah_ayat"
+            )}.`,
+          });
+        }
+        console.log(keyword);
       })
       .catch((err) => {
+        console.log(err);
         this.setState({
           errorMessage: `Masukkan Ayat yang valid. Minimal 0 dan maksimal ${localStorage.getItem(
             "jumlah_ayat"
@@ -92,12 +108,31 @@ export default class DetailSurah extends Component {
             </div>
           </div>
           <div className="item-wrapper">
-            <div style={{ marginBottom: "10px", color: "orange" }}>
+            <div style={{ margin: "10px 0px", color: "orange" }}>
               {this.state.errorMessage}
             </div>
-            {this.state.surah.map((surah) => {
-              return <AyatCard key={surah.id} data={surah} />;
-            })}
+            {this.state.keyword < localStorage.getItem("jumlah_ayat") &&
+            this.state.search_result ? (
+              <AyatCard data={this.state.search_result} />
+            ) : (
+              <div
+                style={{
+                  margin: "10px 0px",
+
+                  backgroundColor: "white",
+                  padding: "20px 20px",
+                  borderRadius: "10px",
+                }}
+              >
+                Masukkan nomor ayat untuk mencari ayat
+              </div>
+            )}
+            <hr />
+            {this.state.surah
+              ? this.state.surah.map((surah) => {
+                  return <AyatCard key={surah.aya_number} data={surah} />;
+                })
+              : "Ayat tidak ditemukan"}
           </div>
           <div className="jump-verse">
             <input
@@ -106,7 +141,9 @@ export default class DetailSurah extends Component {
               name="keyword"
               onChange={this.handleChangeKeyword}
               autoComplete="of"
-              autoFocus
+              // autoFocus
+              // minLength={1}
+              // maxLength={10}
             />
             {/* <button>
               <i className="bi bi-search" onClick={this.handleSearchVerse} />

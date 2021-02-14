@@ -1,5 +1,5 @@
 var CACHE_NAME = "pwa-task-manager";
-var urlsToCache = ["/", "/completed"];
+var urlsToCache = ["/", "/alquran", "/hadis"];
 
 var self = this;
 

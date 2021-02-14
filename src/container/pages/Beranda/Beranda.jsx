@@ -202,7 +202,7 @@ export default class Beranda extends Component {
                 </div>
                 <div className="subtitle">
                   <p>
-                    {this.state.time.tanggal} {this.state.time.bulan}
+                    {this.state.time.tanggal} {this.state.time.bulan}{" "}
                     {this.state.time.tahun}
                   </p>
                 </div>
