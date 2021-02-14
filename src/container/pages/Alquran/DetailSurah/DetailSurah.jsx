@@ -6,7 +6,6 @@ export default class DetailSurah extends Component {
   state = {
     surahId: this.props.match.params.surahId,
     surah: [],
-    surat_name: "",
     keyword: "",
   };
 
@@ -19,6 +18,9 @@ export default class DetailSurah extends Component {
       window.location = "/login";
     }
     const surahId = this.props.match.params.surahId;
+    if (surahId > 114) {
+      window.location = "/alquran";
+    }
     fetch("http://localhost/dyer-app-api/api/quran/?surah=" + surahId)
       .then((res) => res.json())
       .then((res) => {
