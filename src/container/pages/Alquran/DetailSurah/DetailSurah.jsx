@@ -7,6 +7,7 @@ export default class DetailSurah extends Component {
     surahId: this.props.match.params.surahId,
     surah: [],
     keyword: "",
+    url: "http://penerbit-ejbooks.my.id/dyer",
   };
 
   componentDidMount() {
@@ -21,7 +22,7 @@ export default class DetailSurah extends Component {
     if (surahId > 114) {
       window.location = "/alquran";
     }
-    fetch("http://localhost/dyer-app-api/api/quran/?surah=" + surahId)
+    fetch("http://penerbit-ejbooks.my.id/dyer/api/quran/?surah=" + surahId)
       .then((res) => res.json())
       .then((res) => {
         this.setState({

@@ -6,6 +6,7 @@ class Alquran extends Component {
   state = {
     surah: [],
     keyword: "",
+    url: "http://penerbit-ejbooks.my.id/dyer",
   };
 
   goToHadith = () => {
@@ -30,7 +31,7 @@ class Alquran extends Component {
   }
 
   getSurah = () => {
-    fetch("http://localhost/dyer-app-api/api/quran/surah-list.php")
+    fetch(this.state.url + "/api/quran/surah-list.php")
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -56,10 +57,7 @@ class Alquran extends Component {
   };
 
   handleSearch = (keyword) => {
-    fetch(
-      "http://localhost/dyer-app-api/api/quran/find-surah.php?keyword=" +
-        keyword
-    )
+    fetch(this.state.url + "/api/quran/find-surah.php?keyword=" + keyword)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
