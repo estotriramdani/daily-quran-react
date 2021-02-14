@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import QuranCard from "../../../component/QuranCard/QuranCard";
+import "../../../assets/main.css";
 
 class Alquran extends Component {
   state = {
@@ -77,6 +78,8 @@ class Alquran extends Component {
               placeholder="Masukkan Nomor/Nama Surat"
               onChange={this.handleChangeKeyword}
               name="keyword"
+              autoComplete="of"
+              autoFocus
             />
             <button className="search-button">
               <i className="bi bi-search" />

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PrayerTime from "../../../component/PrayerTime/PrayerTime";
+import "../../../assets/main.css";
 
 export default class Beranda extends Component {
   state = {

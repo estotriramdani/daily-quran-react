@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AyatCard from "../AyatCard/AyatCard";
+import "../../../../assets/main.css";
 
 export default class DetailSurah extends Component {
   state = {
@@ -88,10 +89,12 @@ export default class DetailSurah extends Component {
               placeholder="Masukkan ayat"
               name="keyword"
               onChange={this.handleChangeKeyword}
+              autoComplete="of"
+              autoFocus
             />
-            <button>
+            {/* <button>
               <i className="bi bi-search" onClick={this.handleSearchVerse} />
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

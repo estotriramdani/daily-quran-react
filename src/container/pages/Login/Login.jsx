@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react";
+import "../../../assets/main.css";
 
 class Login extends Component {
   state = {

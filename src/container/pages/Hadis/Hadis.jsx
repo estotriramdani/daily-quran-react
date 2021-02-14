@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import HadisCard from "../../../component/HadisCard/HadisCard";
 import "./Hadis.css";
+import "../../../assets/main.css";
 
 class Hadis extends Component {
   state = {
@@ -74,6 +75,8 @@ class Hadis extends Component {
               placeholder="Masukkan topik atau kata kunci lainnya"
               name="keyword"
               onChange={this.handleChangeKeyword}
+              autoComplete="of"
+              autoFocus
             />
             <button className="search-button" onClick={this.handleSearch}>
               <i className="bi bi-search" />

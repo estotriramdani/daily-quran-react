@@ -1,3 +1,131 @@
+/* css reset */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol,
+ul {
+  list-style: none;
+}
+blockquote,
+q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* css reset */
+
 @import url("https://fonts.googleapis.com/css2?family=Mukta:wght@300;400;500;600;700&family=Scheherazade:wght@400;700&family=Space+Mono&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css");
 * {
@@ -24,6 +152,7 @@
   overflow: auto;
   -webkit-box-shadow: 0 5px 4px rgba(0, 0, 0, 0.1);
   box-shadow: 0 5px 4px rgba(0, 0, 0, 0.1);
+  overflow-x: hidden;
 }
 
 .container {
@@ -191,7 +320,7 @@ select option {
 
 @font-face {
   font-family: arabicfont;
-  src: url("../fonts/LPMQ.ttf");
+  src: url("./LPMQ.ttf");
 }
 
 .splash-wrapper {
@@ -515,6 +644,14 @@ select option {
   min-height: 100vh;
 }
 
+.hadis-wrapper .limit {
+  padding: 15px;
+}
+
+.hadis-wrapper .limit input {
+  background-color: #ffffff;
+}
+
 .hadis-wrapper .search-box {
   padding-top: 10px;
   display: -webkit-box;
@@ -737,7 +874,6 @@ select option {
 .detail-quran-wrapper {
   position: relative;
   min-height: 100vh;
-  padding-bottom: 80px;
 }
 
 .detail-quran-wrapper .header-detail {
@@ -747,6 +883,8 @@ select option {
   display: flex;
   position: sticky;
   position: -webkit-sticky;
+  top: 0;
+  z-index: 50;
   width: 375px;
   background-color: #00afb9;
   -webkit-box-pack: justify;
@@ -771,6 +909,11 @@ select option {
 
 .detail-quran-wrapper .header-detail .icon {
   font-size: 30px;
+  cursor: pointer;
+}
+
+.detail-quran-wrapper .header-detail .icon:hover {
+  color: #686d6d;
 }
 
 .detail-quran-wrapper .header-detail .surah {
@@ -866,6 +1009,7 @@ select option {
   height: 40px;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {
