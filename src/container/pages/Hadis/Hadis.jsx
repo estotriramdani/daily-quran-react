@@ -9,7 +9,7 @@ class Hadis extends Component {
     hadis: [],
     keyword: "...",
     limit: 5,
-    base_url: "localhost",
+    base_url: "penerbit-ejbooks.my.id",
     message: `Aplikasi ini masih ada pengembangan. Jika Arabic text masih berupa '???', mohon diabaikan.
     Terima kasih atas perhatiannya`,
   };

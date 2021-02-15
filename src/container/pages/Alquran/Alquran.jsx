@@ -6,7 +6,7 @@ class Alquran extends Component {
   state = {
     surah: [],
     keyword: "",
-    url: "http://localhost/dyer-app-api",
+    url: "http://penerbit-ejbooks.my.id/dyer-app-api",
     errorMessage: "",
   };
 

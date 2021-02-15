@@ -6,7 +6,7 @@ export default class DetailSurah extends Component {
   state = {
     surahId: this.props.match.params.surahId,
     surah: [],
-    keyword: "",
+    keyword: "999",
     base_url:
       "https://raw.githubusercontent.com/iqbalsyamhad/Al-Quran-JSON-Indonesia-Kemenag/master",
     errorMessage: "",
@@ -25,15 +25,12 @@ export default class DetailSurah extends Component {
     if (surahId > 114) {
       window.location = "/alquran";
     }
-    console.log(surahId);
-    // fetch("http://localhost/dyer-app-api/api/quran/index.php?surah=" + surahId)
     fetch(this.state.base_url + "/Surat/" + surahId + ".json")
       .then((res) => res.json())
       .then((res) => {
         this.setState({
           surah: res.data,
         });
-        console.log(res);
       });
     localStorage.setItem("fontSize", "30");
   }
@@ -65,7 +62,6 @@ export default class DetailSurah extends Component {
             )}.`,
           });
         }
-        console.log(keyword);
       })
       .catch((err) => {
         console.log(err);
