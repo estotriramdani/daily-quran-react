@@ -67,8 +67,10 @@ class Alquran extends Component {
         });
       })
       .catch((err) => {
+        console.log(err);
         this.setState({
           errorMessage: `Pastikan ejaan sudah sesuai`,
+          surah: [{}, {}, {}],
         });
       });
   };
@@ -94,16 +96,17 @@ class Alquran extends Component {
             <div style={{ marginBottom: "10px", color: "orange" }}>
               {this.state.errorMessage}
             </div>
-            {this.state.surah.map((surah) => {
-              return (
-                <QuranCard
-                  key={surah.id}
-                  data={surah}
-                  goDetail={this.handleDetail}
-                  saveSurahInfo={this.saveSurahInfo}
-                />
-              );
-            })}
+            {this.state.surah
+              ? this.state.surah.map((surah) => {
+                  return (
+                    <QuranCard
+                      key={surah.id}
+                      data={surah}
+                      goDetail={this.handleDetail}
+                    />
+                  );
+                })
+              : this.state.errorMessage}
           </div>
         </div>
 
