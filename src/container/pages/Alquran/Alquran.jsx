@@ -20,7 +20,7 @@ class Alquran extends Component {
     this.props.history.push("/");
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (
       !localStorage.getItem("name") ||
       !localStorage.getItem("profession") ||
@@ -28,6 +28,9 @@ class Alquran extends Component {
     ) {
       window.location = "/login";
     }
+  }
+
+  componentDidMount() {
     this.getSurah();
   }
 
@@ -86,7 +89,6 @@ class Alquran extends Component {
               onChange={this.handleChangeKeyword}
               name="keyword"
               autoComplete="of"
-              autoFocus
             />
             <button className="search-button">
               <i className="bi bi-search" />

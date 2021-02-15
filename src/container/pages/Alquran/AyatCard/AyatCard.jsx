@@ -1,5 +1,4 @@
 import React from "react";
-let font = parseInt(localStorage.getItem("fontSize"));
 let style = { fontSize: `22px`, lineHeight: `50px`, marginBottom: "20px" };
 const AyatCard = (props) => {
   return (

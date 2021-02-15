@@ -85,7 +85,7 @@ class Hadis extends Component {
               placeholder="Masukkan topik atau kata kunci lainnya"
               name="keyword"
               onChange={this.handleChangeKeyword}
-              autoComplete="of"
+              autoComplete="off"
               autoFocus
             />
             {/* <button className="search-button" >
@@ -103,9 +103,15 @@ class Hadis extends Component {
           <div style={{ padding: "0px 15px" }}>{this.state.message}</div>
           <div className="content-hadith">
             {this.state.hadis.length > 0 ? (
-              <h1>Hasil Pencarian ({`${this.state.hadis.length} hasil`})</h1>
+              <h1>
+                Hasil Pencarian (
+                {`${
+                  this.state.hadis.length ? this.state.hadis.length : "..."
+                } hasil`}
+                )
+              </h1>
             ) : (
-              <h1>Silakan masukan kata kunci</h1>
+              ""
             )}
 
             <div className="item-wrapper">
@@ -113,12 +119,7 @@ class Hadis extends Component {
                 dataLength={this.state.hadis.length} //This is important field to render the next data
                 hasMore={true}
                 loadMore={0}
-                loader={<h4>Loading...</h4>}
-                endMessage={
-                  <p style={{ textAlign: "center" }}>
-                    <b>Yay! You have seen it all</b>
-                  </p>
-                }
+                loader={<h4>Menunggu masukkan kata kunci</h4>}
               >
                 {this.state.hadis.map((hadis) => {
                   return <HadisCard key={hadis.no} data={hadis} />;

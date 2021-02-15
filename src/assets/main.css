@@ -134,7 +134,7 @@ table {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 3px;
 }
 
 ::-webkit-scrollbar-track {
@@ -769,7 +769,7 @@ select option {
 
 @media screen and (max-width: 600px) {
   .search-box input {
-    width: 82vw !important;
+    /* width: 100% !important; */
   }
 }
 
@@ -780,6 +780,8 @@ select option {
 
 .quran-wrapper .search-box {
   padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -868,7 +870,9 @@ select option {
 
 @media screen and (max-width: 600px) {
   .search-box input {
-    width: 82vw !important;
+    /* width: 100% !important; */
+    /* padding-left: 15px; */
+    /* padding-right: 15px; */
   }
 }
 
@@ -1020,6 +1024,10 @@ select option {
   }
   .detail-quran-wrapper .jump-verse {
     width: 100%;
+  }
+
+  ::-webkit-scrollbar {
+    width: 1px;
   }
 }
 /*# sourceMappingURL=main.css.map */

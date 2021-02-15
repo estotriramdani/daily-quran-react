@@ -13,7 +13,7 @@ export default class DetailSurah extends Component {
     search_result: [],
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (
       !localStorage.getItem("name") ||
       !localStorage.getItem("profession") ||
@@ -21,6 +21,15 @@ export default class DetailSurah extends Component {
     ) {
       window.location = "/login";
     }
+  }
+
+  componentDidUpdate() {}
+
+  componentDidMount() {
+    this.getSurah();
+  }
+
+  getSurah = () => {
     const surahId = this.props.match.params.surahId;
     if (surahId > 114) {
       window.location = "/alquran";
@@ -32,8 +41,7 @@ export default class DetailSurah extends Component {
           surah: res.data,
         });
       });
-    localStorage.setItem("fontSize", "30");
-  }
+  };
 
   handleChangeKeyword = (event) => {
     let newKeyword = event.target.value - 1;
@@ -71,6 +79,12 @@ export default class DetailSurah extends Component {
           )}.`,
         });
       });
+  };
+
+  scrollTop = () => {
+    const screen = document.querySelector(".screen");
+    document.body.scrollTop = 0; // For Safari
+    screen.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   };
 
   goToQuran = () => {
@@ -120,7 +134,7 @@ export default class DetailSurah extends Component {
                   borderRadius: "10px",
                 }}
               >
-                Masukkan nomor ayat untuk mencari ayat
+                Masukkan nomor ayat yang valid hendak untuk mencari
               </div>
             )}
             <hr />
@@ -136,14 +150,14 @@ export default class DetailSurah extends Component {
               placeholder="Masukkan ayat"
               name="keyword"
               onChange={this.handleChangeKeyword}
-              autoComplete="of"
+              autoComplete="off"
               // autoFocus
               // minLength={1}
               // maxLength={10}
             />
-            {/* <button>
-              <i className="bi bi-search" onClick={this.handleSearchVerse} />
-            </button> */}
+            <button onClick={this.scrollTop}>
+              <i className="bi bi-search" />
+            </button>
           </div>
         </div>
       </div>
