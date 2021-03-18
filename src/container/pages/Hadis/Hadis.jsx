@@ -1,36 +1,40 @@
-import React, { Component, Fragment } from "react";
-import HadisCard from "../../../component/HadisCard/HadisCard";
-import "./Hadis.css";
-import "../../../assets/main.css";
-import InfiniteScroll from "react-infinite-scroll-component";
+import React, { Component, Fragment, Suspense } from 'react';
+// import HadisCard from "../../../component/HadisCard/HadisCard";
+import './Hadis.css';
+import '../../../assets/main.css';
+import HadisCardLoading from '../../../component/HadisCard/HadisLoading';
+
+const HadisCard = React.lazy(() =>
+  import('../../../component/HadisCard/HadisCard')
+);
 
 class Hadis extends Component {
   state = {
     hadis: [],
-    keyword: "...",
+    keyword: '...',
     limit: 5,
-    base_url: "penerbit-ejbooks.my.id",
-    message: `Aplikasi ini masih ada pengembangan. Jika Arabic text masih berupa '???', mohon diabaikan.
+    base_url: 'penerbit-ejbooks.my.id',
+    message: `Aplikasi ini masih dalam pengembangan. Jika Arabic text masih berupa '???', mohon diabaikan.
     Terima kasih atas perhatiannya`,
   };
 
   goToHadith = () => {
-    this.props.history.push("/hadis");
+    this.props.history.push('/hadis');
   };
   goToQuran = () => {
-    this.props.history.push("/alquran");
+    this.props.history.push('/alquran');
   };
   goHome = () => {
-    this.props.history.push("/");
+    this.props.history.push('/');
   };
 
   componentDidMount() {
     if (
-      !localStorage.getItem("name") ||
-      !localStorage.getItem("profession") ||
-      !localStorage.getItem("location")
+      !localStorage.getItem('name') ||
+      !localStorage.getItem('profession') ||
+      !localStorage.getItem('location')
     ) {
-      window.location = "/login";
+      window.location = '/login';
     }
   }
 
@@ -100,31 +104,28 @@ class Hadis extends Component {
               onChange={this.handleChangeLimit}
             />
           </div>
-          <div style={{ padding: "0px 15px" }}>{this.state.message}</div>
+          <div style={{ padding: '0px 15px' }}>{this.state.message}</div>
           <div className="content-hadith">
             {this.state.hadis.length > 0 ? (
               <h1>
                 Hasil Pencarian (
                 {`${
-                  this.state.hadis.length ? this.state.hadis.length : "..."
+                  this.state.hadis.length ? this.state.hadis.length : '...'
                 } hasil`}
                 )
               </h1>
             ) : (
-              ""
+              ''
             )}
 
             <div className="item-wrapper">
-              <InfiniteScroll
-                dataLength={this.state.hadis.length} //This is important field to render the next data
-                hasMore={true}
-                loadMore={0}
-                loader={<h4>Menunggu masukkan kata kunci</h4>}
-              >
-                {this.state.hadis.map((hadis) => {
-                  return <HadisCard key={hadis.no} data={hadis} />;
-                })}
-              </InfiniteScroll>
+              {this.state.hadis.map((hadis) => {
+                return (
+                  <Suspense fallback={<HadisCardLoading />}>
+                    <HadisCard key={hadis.no} data={hadis} />
+                  </Suspense>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -134,7 +135,7 @@ class Hadis extends Component {
           <div className="item" onClick={this.goToHadith}>
             <span>
               <div className="icon">
-                <i className="bi bi-journal-text" />
+                <i className="bi bi-journal-album" />
               </div>
               <p>Hadis</p>
             </span>

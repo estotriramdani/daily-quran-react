@@ -1,0 +1,22 @@
+.line {
+  display: inline-block;
+  height: 8px;
+  width: 80px !important;
+  /* background-color: #00afb9; */
+  color: #00afb9;
+  font-weight: bold;
+  animation: gerak 1.5s infinite normal;
+  margin: auto;
+}
+
+@keyframes gerak {
+  0% {
+    transform: translateX(0px);
+  }
+  50% {
+    transform: translateX(50px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}

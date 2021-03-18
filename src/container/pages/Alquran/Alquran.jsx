@@ -1,32 +1,36 @@
-import React, { Component, Fragment } from "react";
-import QuranCard from "../../../component/QuranCard/QuranCard";
-import "../../../assets/main.css";
+import React, { Component, Fragment, Suspense } from 'react';
+import '../../../assets/main.css';
+import QuranCardLoading from '../../../component/QuranCard/QuranCardLoading';
+
+const QuranCard = React.lazy(() =>
+  import('../../../component/QuranCard/QuranCard')
+);
 
 class Alquran extends Component {
   state = {
     surah: [],
-    keyword: "",
-    url: "http://penerbit-ejbooks.my.id/dyer-app-api",
-    errorMessage: "",
+    keyword: '',
+    url: 'http://penerbit-ejbooks.my.id/dyer-app-api',
+    errorMessage: '',
   };
 
   goToHadith = () => {
-    this.props.history.push("/hadis");
+    this.props.history.push('/hadis');
   };
   goToQuran = () => {
-    this.props.history.push("/alquran");
+    this.props.history.push('/alquran');
   };
   goHome = () => {
-    this.props.history.push("/");
+    this.props.history.push('/');
   };
 
   componentWillMount() {
     if (
-      !localStorage.getItem("name") ||
-      !localStorage.getItem("profession") ||
-      !localStorage.getItem("location")
+      !localStorage.getItem('name') ||
+      !localStorage.getItem('profession') ||
+      !localStorage.getItem('location')
     ) {
-      window.location = "/login";
+      window.location = '/login';
     }
   }
 
@@ -35,7 +39,7 @@ class Alquran extends Component {
   }
 
   getSurah = () => {
-    fetch(this.state.url + "/api/quran/surah-list.php")
+    fetch(this.state.url + '/api/quran/surah-list.php')
       .then((res) => res.json())
       .then((res) => {
         this.setState({
@@ -46,9 +50,9 @@ class Alquran extends Component {
 
   handleDetail = (id, surat_name, jumlah_ayat, terjemah) => {
     this.props.history.push(`/alquran/${id}`);
-    localStorage.setItem("surat_name", surat_name);
-    localStorage.setItem("jumlah_ayat", jumlah_ayat);
-    localStorage.setItem("surat_terjemah", terjemah);
+    localStorage.setItem('surat_name', surat_name);
+    localStorage.setItem('jumlah_ayat', jumlah_ayat);
+    localStorage.setItem('surat_terjemah', terjemah);
   };
 
   handleChangeKeyword = (event) => {
@@ -56,17 +60,17 @@ class Alquran extends Component {
     this.setState({
       keyword: newKeyword,
     });
-    console.log(this.state.keyword);
+
     this.handleSearch(newKeyword);
   };
 
   handleSearch = (keyword) => {
-    fetch(this.state.url + "/api/quran/find-surah.php?keyword=" + keyword)
+    fetch(this.state.url + '/api/quran/find-surah.php?keyword=' + keyword)
       .then((res) => res.json())
       .then((res) => {
         this.setState({
           surah: res,
-          errorMessage: "",
+          errorMessage: '',
         });
       })
       .catch((err) => {
@@ -95,17 +99,19 @@ class Alquran extends Component {
             </button>
           </div>
           <div className="item-wrapper">
-            <div style={{ marginBottom: "10px", color: "orange" }}>
+            <div style={{ marginBottom: '10px', color: 'orange' }}>
               {this.state.errorMessage}
             </div>
             {this.state.surah
               ? this.state.surah.map((surah) => {
                   return (
-                    <QuranCard
-                      key={surah.id}
-                      data={surah}
-                      goDetail={this.handleDetail}
-                    />
+                    <Suspense fallback={<QuranCardLoading />}>
+                      <QuranCard
+                        key={surah.id}
+                        data={surah}
+                        goDetail={this.handleDetail}
+                      />
+                    </Suspense>
                   );
                 })
               : this.state.errorMessage}
@@ -133,7 +139,7 @@ class Alquran extends Component {
           <div className="item" onClick={this.goToQuran}>
             <span>
               <div className="icon">
-                <i className="bi bi-book" />
+                <i className="bi bi-book-half" />
               </div>
               <p>Alquran</p>
             </span>

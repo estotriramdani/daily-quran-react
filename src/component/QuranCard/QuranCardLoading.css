@@ -1,0 +1,24 @@
+.garis {
+  display: inline-block;
+  height: 8px;
+  width: 80px !important;
+  /* background-color: #00afb9; */
+  color: #00afb9;
+  font-weight: bold;
+  animation: move 1.5s infinite normal;
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(0px);
+    /* opacity: 1; */
+  }
+  50% {
+    /* opacity: 0; */
+    transform: translateX(50px);
+  }
+  100% {
+    /* opacity: 1; */
+    transform: translateX(0px);
+  }
+}

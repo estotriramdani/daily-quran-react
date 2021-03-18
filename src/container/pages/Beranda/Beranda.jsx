@@ -1,20 +1,24 @@
-import React, { Component, Fragment } from "react";
-import PrayerTime from "../../../component/PrayerTime/PrayerTime";
-import "../../../assets/main.css";
+import React, { Component, Fragment, Suspense } from 'react';
+import PrayerTimeLoading from '../../../component/PrayerTime/PrayerTimeLoading';
+import '../../../assets/main.css';
+
+const PrayerTime = React.lazy(() =>
+  import('../../../component/PrayerTime/PrayerTime')
+);
 
 export default class Beranda extends Component {
   state = {
     identity: {
-      name: localStorage.getItem("name"),
-      location: localStorage.getItem("location"),
-      profession: localStorage.getItem("profession"),
+      name: localStorage.getItem('name'),
+      location: localStorage.getItem('location'),
+      profession: localStorage.getItem('profession'),
     },
     time: {
       jam: 0,
       menit: 0,
-      tanggalFull: "",
-      hari: "",
-      bulan: "",
+      tanggalFull: '',
+      hari: '',
+      bulan: '',
       tanggal: 0,
       bulanAngka: 0,
       tahun: 0,
@@ -24,11 +28,11 @@ export default class Beranda extends Component {
 
   componentDidMount() {
     if (
-      !localStorage.getItem("name") &&
-      !localStorage.getItem("profession") &&
-      !localStorage.getItem("location")
+      !localStorage.getItem('name') &&
+      !localStorage.getItem('profession') &&
+      !localStorage.getItem('location')
     ) {
-      window.location = "/login";
+      window.location = '/login';
     }
 
     this.time();
@@ -42,67 +46,67 @@ export default class Beranda extends Component {
     let bulan = waktu.getMonth();
     let tahun = waktu.getFullYear();
     let tanggalFull = `${tahun + 1}-${bulan + 1}-${tanggal}`;
-    let day = "";
-    let month = "";
+    let day = '';
+    let month = '';
     switch (new Date().getDay()) {
       case 0:
-        day = "Minggu";
+        day = 'Minggu';
         break;
       case 1:
-        day = "Senin";
+        day = 'Senin';
         break;
       case 2:
-        day = "Selasa";
+        day = 'Selasa';
         break;
       case 3:
-        day = "Rabu";
+        day = 'Rabu';
         break;
       case 4:
-        day = "Kamis";
+        day = 'Kamis';
         break;
       case 5:
-        day = "Jumat";
+        day = 'Jumat';
         break;
       default:
-        day = "Sabtu";
+        day = 'Sabtu';
     }
 
     switch (bulan) {
       case 0:
-        month = "Januari";
+        month = 'Januari';
         break;
       case 1:
-        month = "Februari";
+        month = 'Februari';
         break;
       case 2:
-        month = "Maret";
+        month = 'Maret';
         break;
       case 3:
-        month = "April";
+        month = 'April';
         break;
       case 4:
-        month = "Mei";
+        month = 'Mei';
         break;
       case 5:
-        month = "Juni";
+        month = 'Juni';
         break;
       case 6:
-        month = "Juli";
+        month = 'Juli';
         break;
       case 7:
-        month = "Agustus";
+        month = 'Agustus';
         break;
       case 8:
-        month = "September";
+        month = 'September';
         break;
       case 9:
-        month = "Oktober";
+        month = 'Oktober';
         break;
       case 10:
-        month = "November";
+        month = 'November';
         break;
       default:
-        month = "Desember";
+        month = 'Desember';
     }
 
     let newTime = {
@@ -131,25 +135,25 @@ export default class Beranda extends Component {
         this.setState({
           prayerTime: res.results.datetime[0].times,
         });
-        console.log(this.state.prayerTime["Imsak"]);
+        console.log(this.state.prayerTime['Imsak']);
       });
   };
 
   handleLogout = () => {
-    localStorage.setItem("name", "");
-    localStorage.setItem("location", "");
-    localStorage.setItem("profession", "");
-    this.props.history.push("/login");
+    localStorage.setItem('name', '');
+    localStorage.setItem('location', '');
+    localStorage.setItem('profession', '');
+    this.props.history.push('/login');
   };
 
   goToHadith = () => {
-    this.props.history.push("/hadis");
+    this.props.history.push('/hadis');
   };
   goToQuran = () => {
-    this.props.history.push("/alquran");
+    this.props.history.push('/alquran');
   };
   goHome = () => {
-    this.props.history.push("/");
+    this.props.history.push('/');
   };
 
   render() {
@@ -202,24 +206,40 @@ export default class Beranda extends Component {
                 </div>
                 <div className="subtitle">
                   <p>
-                    {this.state.time.tanggal} {this.state.time.bulan}{" "}
+                    {this.state.time.tanggal} {this.state.time.bulan}{' '}
                     {this.state.time.tahun}
                   </p>
                 </div>
                 <div className="source">Sumber: Kemenag RI</div>
               </div>
               <div className="body-section prayer-widget">
-                <PrayerTime waktu="Subuh" jam={this.state.prayerTime["Fajr"]} />
-                <PrayerTime
-                  waktu="Zuhur"
-                  jam={this.state.prayerTime["Dhuhr"]}
-                />
-                <PrayerTime waktu="Asar" jam={this.state.prayerTime["Asr"]} />
-                <PrayerTime
-                  waktu="Magrib"
-                  jam={this.state.prayerTime["Maghrib"]}
-                />
-                <PrayerTime waktu="Isya" jam={this.state.prayerTime["Isha"]} />
+                <Suspense fallback={<PrayerTimeLoading />}>
+                  <PrayerTime
+                    waktu="Subuh"
+                    jam={this.state.prayerTime['Fajr']}
+                  />
+                </Suspense>
+                <Suspense fallback={<PrayerTimeLoading />}>
+                  <PrayerTime
+                    waktu="Zuhur"
+                    jam={this.state.prayerTime['Dhuhr']}
+                  />
+                </Suspense>
+                <Suspense fallback={<PrayerTimeLoading />}>
+                  <PrayerTime waktu="Asar" jam={this.state.prayerTime['Asr']} />
+                </Suspense>
+                <Suspense fallback={<PrayerTimeLoading />}>
+                  <PrayerTime
+                    waktu="Magrib"
+                    jam={this.state.prayerTime['Maghrib']}
+                  />
+                </Suspense>
+                <Suspense fallback={<PrayerTimeLoading />}>
+                  <PrayerTime
+                    waktu="Isya"
+                    jam={this.state.prayerTime['Isha']}
+                  />
+                </Suspense>
               </div>
             </div>
             <div className="card">
@@ -257,7 +277,7 @@ export default class Beranda extends Component {
           <div className="item" onClick={this.goHome}>
             <span>
               <div className="icon">
-                <i className="bi bi-house" />
+                <i className="bi bi-house-fill" />
               </div>
               <p>Beranda</p>
             </span>
