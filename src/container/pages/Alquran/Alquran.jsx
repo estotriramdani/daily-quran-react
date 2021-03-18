@@ -84,68 +84,70 @@ class Alquran extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div className="quran-wrapper">
-          <div className="search-box">
-            <input
-              type="text"
-              placeholder="Masukkan Nomor/Nama Surat"
-              onChange={this.handleChangeKeyword}
-              name="keyword"
-              autoComplete="of"
-            />
-            {/* <button className="search-button">
+      <Suspense fallback={<QuranCardLoading />}>
+        <Fragment>
+          <div className="quran-wrapper">
+            <div className="search-box">
+              <input
+                type="text"
+                placeholder="Masukkan Nomor/Nama Surat"
+                onChange={this.handleChangeKeyword}
+                name="keyword"
+                autoComplete="of"
+              />
+              {/* <button className="search-button">
               <i className="bi bi-search" />
             </button> */}
-          </div>
-          <div className="item-wrapper">
-            <div style={{ marginBottom: '10px', color: 'orange' }}>
-              {this.state.errorMessage}
             </div>
-            {this.state.surah
-              ? this.state.surah.map((surah) => {
-                  return (
-                    <Suspense fallback={<QuranCardLoading />}>
-                      <QuranCard
-                        key={surah.id}
-                        data={surah}
-                        goDetail={this.handleDetail}
-                      />
-                    </Suspense>
-                  );
-                })
-              : this.state.errorMessage}
+            <div className="item-wrapper">
+              <div style={{ marginBottom: '10px', color: 'orange' }}>
+                {this.state.errorMessage}
+              </div>
+              {this.state.surah
+                ? this.state.surah.map((surah) => {
+                    return (
+                      <Suspense fallback={<QuranCardLoading />}>
+                        <QuranCard
+                          key={surah.id}
+                          data={surah}
+                          goDetail={this.handleDetail}
+                        />
+                      </Suspense>
+                    );
+                  })
+                : this.state.errorMessage}
+            </div>
           </div>
-        </div>
 
-        {/* navigation */}
-        <div className="navigation">
-          <div className="item" onClick={this.goToHadith}>
-            <span>
-              <div className="icon">
-                <i className="bi bi-journal-text" />
-              </div>
-              <p>Hadis</p>
-            </span>
+          {/* navigation */}
+          <div className="navigation">
+            <div className="item" onClick={this.goToHadith}>
+              <span>
+                <div className="icon">
+                  <i className="bi bi-journal-text" />
+                </div>
+                <p>Hadis</p>
+              </span>
+            </div>
+            <div className="item" onClick={this.goHome}>
+              <span>
+                <div className="icon">
+                  <i className="bi bi-house" />
+                </div>
+                <p>Beranda</p>
+              </span>
+            </div>
+            <div className="item" onClick={this.goToQuran}>
+              <span>
+                <div className="icon">
+                  <i className="bi bi-book-half" />
+                </div>
+                <p>Alquran</p>
+              </span>
+            </div>
           </div>
-          <div className="item" onClick={this.goHome}>
-            <span>
-              <div className="icon">
-                <i className="bi bi-house" />
-              </div>
-              <p>Beranda</p>
-            </span>
-          </div>
-          <div className="item" onClick={this.goToQuran}>
-            <span>
-              <div className="icon">
-                <i className="bi bi-book-half" />
-              </div>
-              <p>Alquran</p>
-            </span>
-          </div>
-        </div>
-      </Fragment>
+        </Fragment>
+      </Suspense>
     );
   }
 }

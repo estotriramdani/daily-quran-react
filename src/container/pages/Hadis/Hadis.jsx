@@ -92,9 +92,6 @@ class Hadis extends Component {
               autoComplete="off"
               autoFocus
             />
-            {/* <button className="search-button" >
-              <i className="bi bi-search" />
-            </button> */}
           </div>
           <div className="limit">
             <input
