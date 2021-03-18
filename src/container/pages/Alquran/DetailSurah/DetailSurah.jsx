@@ -14,6 +14,7 @@ export default class DetailSurah extends Component {
       'https://raw.githubusercontent.com/iqbalsyamhad/Al-Quran-JSON-Indonesia-Kemenag/master',
     errorMessage: '',
     search_result: [],
+    messageResult: false,
   };
 
   componentWillMount() {
@@ -55,9 +56,6 @@ export default class DetailSurah extends Component {
   };
 
   handleSearchVerse = (keyword) => {
-    // fetch(
-    //   `http://penerbit-ejbooks.my.id/dyer-app-api/api/quran/ayat.php?surah=${this.state.surahId}&ayat=${keyword}`
-    // )
     fetch(`${this.state.base_url}/Surat/${this.state.surahId}.json`)
       .then((res) => res.json())
       .then((res) => {
@@ -87,7 +85,10 @@ export default class DetailSurah extends Component {
   scrollTop = () => {
     const screen = document.querySelector('.screen');
     document.body.scrollTop = 0; // For Safari
-    screen.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    screen.scrollTo({ top: 0, behavior: 'smooth' });
+    this.setState({
+      messageResult: true,
+    });
   };
 
   goToQuran = () => {
@@ -121,6 +122,12 @@ export default class DetailSurah extends Component {
             </div>
           </div>
           <div className="item-wrapper">
+            {this.state.messageResult ? (
+              <p>Hasil pencarian untuk ayat {this.state.keyword}</p>
+            ) : (
+              ''
+            )}
+
             <div style={{ margin: '10px 0px', color: 'orange' }}>
               {this.state.errorMessage}
             </div>

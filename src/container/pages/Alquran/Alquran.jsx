@@ -94,9 +94,9 @@ class Alquran extends Component {
               name="keyword"
               autoComplete="of"
             />
-            <button className="search-button">
+            {/* <button className="search-button">
               <i className="bi bi-search" />
-            </button>
+            </button> */}
           </div>
           <div className="item-wrapper">
             <div style={{ marginBottom: '10px', color: 'orange' }}>

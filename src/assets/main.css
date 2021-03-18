@@ -795,7 +795,8 @@ select option {
 }
 
 .quran-wrapper .search-box input {
-  width: 300px;
+  /* width: 300px; */
+  width: 100%;
   display: inline-block;
   background-color: #ffffff;
   height: 42px;
@@ -829,7 +830,7 @@ select option {
 
 .quran-wrapper .item-wrapper {
   margin-top: 26px;
-  padding: 0 15px;
+  padding: 0 20px;
   font-family: 'Mukta', sans-serif;
 }
 
